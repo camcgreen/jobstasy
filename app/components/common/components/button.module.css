@@ -1,0 +1,26 @@
+.button {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  border: solid var(--color-action) 1px;
+  border-radius: var(--border-radius-sm);
+  color: var(--color-action);
+  padding: 10px 20px;
+  transition: border-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+.button:hover {
+  border-color: var(--color-action-hovered);
+  color: var(--color-action-hovered);
+}
+
+.solid {
+  background-color: var(--color-action);
+  color: white;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.solid:hover {
+  background-color: var(--color-action-hovered);
+  color: white;
+}
