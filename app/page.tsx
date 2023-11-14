@@ -1,12 +1,14 @@
+'use client'
+
 import Image from 'next/image'
-import firebaseApp from '@/firebase/config.js'
-import { createUserWithEmailAndPassword, getAuth } from 'firebase/auth'
-import Button from '@/app/components/common/components/button'
+import { useDemoAuth } from '@/app/components/common/hooks/useDemoAuth'
 import styles from '@/app/page.module.css'
 
-const auth = getAuth(firebaseApp)
-
 export default function Home() {
+  const { loginAsDemo } = useDemoAuth()
+  const handleDemoLogin = (type: string) => {
+    loginAsDemo(type)
+  }
   return (
     <main className={styles.main}>
       <div className={styles.content}>
@@ -17,21 +19,21 @@ export default function Home() {
           alt='Jobstasy logo'
           className={styles.logo}
         />
-        <Button solid={true} text='Log in as a demo user' />
+        <button
+          className='button button-solid'
+          onClick={() => handleDemoLogin('user')}
+        >
+          Log in as a demo user
+        </button>
         <p className={styles.note}>Demo users can search and apply for jobs.</p>
         <div className={styles.break}>
           <div />
           <p>or</p>
           <div />
         </div>
-        <Button solid={false} text='Log in as a demo company' />
-        {/* <p className={styles.note}>Demo users can search and apply for jobs.</p>
-        <p className={styles.note}>Demo companies can post jobs.</p> */}
-        {/* <p className={styles.note}>
-          Demo users can search and apply for jobs.
-          <br />
-          Demo companies can post jobs.
-        </p> */}
+        <button className='button' onClick={() => handleDemoLogin('company')}>
+          Log in as a demo company
+        </button>
         <p className={styles.note}>Demo companies can post jobs.</p>
       </div>
     </main>
