@@ -4,7 +4,7 @@ import styles from '@/app/(routes)/jobs/page.module.css'
 export default function Jobs() {
   return (
     <main className={styles.main}>
-      <h1>Log in</h1>
+      <h1>Jobs</h1>
     </main>
   )
 }
