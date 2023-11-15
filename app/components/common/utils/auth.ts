@@ -4,7 +4,7 @@ import {
   getAuth,
 } from 'firebase/auth'
 import { addUserToFirestore } from '@/app/components/common/utils/addUser'
-import firebaseApp from '@/firebase/config.js'
+import { firebaseApp } from '@/firebase/config'
 
 const auth = getAuth(firebaseApp)
 

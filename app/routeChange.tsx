@@ -2,7 +2,7 @@
 
 import { useRouter, usePathname } from 'next/navigation'
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import firebaseApp from '@/firebase/config.js'
+import { firebaseApp } from '@/firebase/config'
 import { useEffect } from 'react'
 
 export function RouteChangeListener() {
