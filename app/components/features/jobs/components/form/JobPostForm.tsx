@@ -3,6 +3,8 @@ import React from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import Tiptap from '@/app/components/features/jobs/components/form/tiptap/titap'
 import DualThumbSlider from '@/app/components/common/components/dual-thumb-slider/dualThumbSlider'
+import { defaultFormValues } from '@/app/components/features/jobs/components/form/validation/defaultFormValues'
+import { formRules } from '@/app/components/features/jobs/components/form/validation/rules'
 import { useFormSubmit } from '@/app/components/features/jobs/hooks/useFormSubmit'
 import { JobFromForm } from '@/app/components/features/jobs/types/jobFromForm'
 import {
@@ -20,15 +22,7 @@ const JobPostForm: React.FC = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({
-    defaultValues: {
-      title: '',
-      location: '',
-      description: '',
-      level: '',
-      fullTime: true,
-      salaryRange: '',
-      deadline: '',
-    },
+    defaultValues: defaultFormValues,
   })
   const submitForm = useFormSubmit()
   const onSubmit = async (data: JobFromForm) => {
@@ -39,42 +33,14 @@ const JobPostForm: React.FC = () => {
       <h2>Form</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor='title'>Title</label>
-        <input
-          {...register('title', {
-            required: 'You must include the job title.',
-            minLength: {
-              value: 4,
-              message: 'The job title must be at least 4 characters long.',
-            },
-            maxLength: {
-              value: 80,
-              message:
-                'The job title must be no longer than 80 characters long.',
-            },
-          })}
-        />
+        <input {...register('title', formRules.title)} />
         <label htmlFor='location'>Location</label>
-        <input
-          {...register('location', {
-            required: 'You must include the job location.',
-            minLength: {
-              value: 2,
-              message: 'The job location must be at least 2 characters long.',
-            },
-            maxLength: {
-              value: 80,
-              message:
-                'The job location must be no longer than 80 characters long.',
-            },
-          })}
-        />
+        <input {...register('location', formRules.location)} />
         <label htmlFor='description'>Description</label>
         <Controller
           control={control}
           name='description'
-          rules={{
-            required: 'You must enter a job description.',
-          }}
+          rules={formRules.description}
           render={({ field: { onChange } }) => (
             <Tiptap
               description=''
@@ -85,11 +51,7 @@ const JobPostForm: React.FC = () => {
           )}
         />
         <label htmlFor='level'>Seniority Level</label>
-        <select
-          {...register('level', {
-            required: 'You must include the job seniority level.',
-          })}
-        >
+        <select {...register('level', formRules.level)}>
           <option value='' disabled>
             {/* Select option... */}
           </option>
@@ -130,10 +92,7 @@ const JobPostForm: React.FC = () => {
         <Controller
           control={control}
           name='deadline'
-          rules={{
-            required:
-              'You must enter a date and time for the application deadline.',
-          }}
+          rules={formRules.deadline}
           render={({ field }) => (
             <input
               type='datetime-local'
@@ -145,7 +104,7 @@ const JobPostForm: React.FC = () => {
         />
         <input type='submit' />
       </form>
-      <p>{errors.description?.message}</p>
+      <p>{errors.deadline?.message}</p>
     </div>
   )
 }
