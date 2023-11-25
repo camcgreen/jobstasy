@@ -1,14 +1,9 @@
-export interface Job {
+import { JobFromForm } from '@/app/components/features/jobs/types/jobFromForm'
+
+export interface Job extends JobFromForm {
   uid: string
-  createdAt: number
-  deadline: number
-  title: string
   company: string
-  location: string
-  salaryMin: number
-  salaryMax: number
-  fullTime: boolean
-  level: string
+  createdAt: number
   applicants: number
   md: string
 }

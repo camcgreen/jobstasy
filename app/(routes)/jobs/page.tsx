@@ -1,7 +1,7 @@
 import JobsList from '@/app/components/features/jobs/components/JobsList'
 import styles from '@/app/(routes)/jobs/page.module.css'
 
-export default function Jobs() {
+const Jobs: React.FC = () => {
   return (
     <main className={styles.main}>
       <h1>Jobs Hero</h1>
@@ -9,3 +9,5 @@ export default function Jobs() {
     </main>
   )
 }
+
+export default Jobs

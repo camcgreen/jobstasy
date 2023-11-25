@@ -4,7 +4,7 @@ import Image from 'next/image'
 import { useDemoAuth } from '@/app/components/common/hooks/useDemoAuth'
 import styles from '@/app/page.module.css'
 
-export default function Home() {
+const Home: React.FC = () => {
   const { loginAsDemo } = useDemoAuth()
   const handleDemoLogin = (type: string) => {
     loginAsDemo(type)
@@ -39,3 +39,5 @@ export default function Home() {
     </main>
   )
 }
+
+export default Home
