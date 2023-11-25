@@ -122,8 +122,16 @@ const JobPostForm: React.FC = () => {
               min={25000}
               max={100000}
               onChange={({ min, max }: { min: number; max: number }) => {
-                const formattedMin = min
-                const formattedMax = max
+                const minStr = min.toString()
+                const maxStr = max.toString()
+                const formattedMin =
+                  minStr.substring(0, minStr.length - 3) +
+                  ',' +
+                  minStr.substring(minStr.length - 3)
+                const formattedMax =
+                  maxStr.substring(0, maxStr.length - 3) +
+                  ',' +
+                  maxStr.substring(maxStr.length - 3)
                 const salaryRange = `£${formattedMin}-£${formattedMax}`
                 onChange(salaryRange)
               }}
