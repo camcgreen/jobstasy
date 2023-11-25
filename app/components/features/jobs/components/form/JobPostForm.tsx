@@ -76,7 +76,7 @@ const JobPostForm: React.FC = () => {
             <Tiptap
               description=''
               onChange={(e) => {
-                onChange(e)
+                onChange(e) // HTML in typeof string
               }}
             />
           )}

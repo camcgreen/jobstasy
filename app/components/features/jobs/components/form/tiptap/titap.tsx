@@ -3,7 +3,11 @@ import React from 'react'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Heading from '@tiptap/extension-heading'
+import Paragraph from '@tiptap/extension-paragraph'
+import ListItem from '@tiptap/extension-list-item'
+import BulletList from '@tiptap/extension-bullet-list'
 import Toolbar from '@/app/components/features/jobs/components/form/tiptap/toolbar'
+import styles from '@/app/components/features/jobs/components/form/tiptap/tiptap.module.css'
 
 const Tiptap = ({
   description,
@@ -15,17 +19,15 @@ const Tiptap = ({
   const editor = useEditor({
     extensions: [
       StarterKit.configure({}),
-      Heading.configure({
-        HTMLAttributes: {
-          class: '',
-          levels: [2],
-        },
-      }),
+      Heading,
+      // Paragraph,
+      ListItem,
+      BulletList,
     ],
     content: description,
     editorProps: {
       attributes: {
-        class: '',
+        class: styles.container,
       },
     },
     onUpdate({ editor }) {

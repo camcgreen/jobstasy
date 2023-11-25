@@ -1,0 +1,16 @@
+.container {
+  border: solid grey 1px;
+  padding-left: 1px;
+}
+
+.container h2 {
+
+}
+
+.container ul {
+  list-style-position: inside;
+}
+
+.container ul li>p:first-child {
+  display: inline;
+}
