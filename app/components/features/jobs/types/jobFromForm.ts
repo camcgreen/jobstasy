@@ -5,5 +5,5 @@ export interface JobFromForm {
   salaryRange: string
   fullTime: boolean
   level: string
-  md: string
+  description: string
 }

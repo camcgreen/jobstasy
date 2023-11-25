@@ -3,8 +3,9 @@
 import React from 'react'
 import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { JobFromForm } from '@/app/components/features/jobs/types/jobFromForm'
-import styles from '@/app/components/features/jobs/components/form/page.module.css'
+import Tiptap from '@/app/components/features/jobs/components/form/tiptap/titap'
 import DualThumbSlider from '@/app/components/common/components/dual-thumb-slider/dualThumbSlider'
+import styles from '@/app/components/features/jobs/components/form/page.module.css'
 
 const JobPostForm: React.FC = () => {
   const now: string = new Date().toISOString().slice(0, 16)
@@ -23,11 +24,11 @@ const JobPostForm: React.FC = () => {
     defaultValues: {
       title: '',
       location: '',
+      description: '',
       level: '',
       fullTime: true,
       salaryRange: '',
       deadline: '',
-      md: '',
     },
   })
   const onSubmit: SubmitHandler<JobFromForm> = (data) => console.log(data)
@@ -64,6 +65,21 @@ const JobPostForm: React.FC = () => {
             },
           })}
           placeholder='Location'
+        />
+        <Controller
+          control={control}
+          name='description'
+          rules={{
+            required: 'You must enter a job description.',
+          }}
+          render={({ field: { onChange } }) => (
+            <Tiptap
+              description=''
+              onChange={(e) => {
+                onChange(e)
+              }}
+            />
+          )}
         />
         <select
           {...register('level', {
@@ -116,7 +132,7 @@ const JobPostForm: React.FC = () => {
         />
         <input type='submit' />
       </form>
-      <p>{errors.deadline?.message}</p>
+      <p>{errors.description?.message}</p>
     </div>
   )
 }
