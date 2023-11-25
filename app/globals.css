@@ -12,6 +12,7 @@
   --color-supplement: #565862;
   --border-radius-lg: 24px;
   --border-radius-sm: 8px;
+  --transition-md: 0.2s;
 }
 
 * {

@@ -91,10 +91,18 @@ const DualThumbSlider: FC<DualThumbSliderProps> = ({ min, max, onChange }) => {
       />
 
       <div className={styles.slider}>
+        <div className={styles.sliderValueLeft}>{`£${
+          minVal.toString().substring(0, minVal.toString().length - 3) +
+          ',' +
+          minVal.toString().substring(minVal.toString().length - 3)
+        }`}</div>
+        <div className={styles.sliderValueRight}>{`£${
+          maxVal.toString().substring(0, maxVal.toString().length - 3) +
+          ',' +
+          maxVal.toString().substring(maxVal.toString().length - 3)
+        }`}</div>
         <div className={styles.sliderTrack}></div>
         <div ref={range} className={styles.sliderRange}></div>
-        <div className={styles.sliderValueLeft}>{`£${minVal}`}</div>
-        <div className={styles.sliderValueRight}>{`£${maxVal}`}</div>
       </div>
     </div>
   )

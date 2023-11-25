@@ -52,6 +52,7 @@ const JobPostForm: React.FC = () => {
     <div className={styles.container}>
       <h2>Form</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
+        <label htmlFor='title'>Title</label>
         <input
           {...register('title', {
             required: 'You must include the job title.',
@@ -65,8 +66,8 @@ const JobPostForm: React.FC = () => {
                 'The job title must be no longer than 80 characters long.',
             },
           })}
-          placeholder='Title'
         />
+        <label htmlFor='location'>Location</label>
         <input
           {...register('location', {
             required: 'You must include the job location.',
@@ -80,8 +81,8 @@ const JobPostForm: React.FC = () => {
                 'The job location must be no longer than 80 characters long.',
             },
           })}
-          placeholder='Location'
         />
+        <label htmlFor='description'>Description</label>
         <Controller
           control={control}
           name='description'
@@ -97,13 +98,14 @@ const JobPostForm: React.FC = () => {
             />
           )}
         />
+        <label htmlFor='level'>Seniority Level</label>
         <select
           {...register('level', {
             required: 'You must include the job seniority level.',
           })}
         >
           <option value='' disabled>
-            Select job level...
+            {/* Select option... */}
           </option>
           <option value='Junior'>Junior</option>
           <option value='Mid-Level'>Mid-level</option>
@@ -113,7 +115,7 @@ const JobPostForm: React.FC = () => {
           Full Time:
           <input type='checkbox' {...register('fullTime')} />
         </label>
-        <label htmlFor='salaryRange'>Salary range:</label>
+        <label htmlFor='salaryRange'>Salary</label>
         <Controller
           control={control}
           name='salaryRange'
@@ -138,6 +140,7 @@ const JobPostForm: React.FC = () => {
             />
           )}
         />
+        <label htmlFor='deadline'>Application Deadline</label>
         <Controller
           control={control}
           name='deadline'

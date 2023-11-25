@@ -16,6 +16,9 @@ export function RouteChangeListener() {
         if (!user) {
           router.push('/')
         }
+        if (pathname === '/post' && user?.email?.includes('user')) {
+          router.push('/jobs')
+        }
       })
     }
   }, [pathname])

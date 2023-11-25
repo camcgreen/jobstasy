@@ -1,9 +1,9 @@
 'use client'
 import React from 'react'
+import DOMPurify from 'dompurify'
 import { useEditor, EditorContent } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
 import Heading from '@tiptap/extension-heading'
-import Paragraph from '@tiptap/extension-paragraph'
 import ListItem from '@tiptap/extension-list-item'
 import BulletList from '@tiptap/extension-bullet-list'
 import Toolbar from '@/app/components/features/jobs/components/form/tiptap/toolbar'
@@ -17,13 +17,7 @@ const Tiptap = ({
   onChange: (richText: string) => void
 }) => {
   const editor = useEditor({
-    extensions: [
-      StarterKit.configure({}),
-      Heading,
-      // Paragraph,
-      ListItem,
-      BulletList,
-    ],
+    extensions: [StarterKit.configure({}), Heading, ListItem, BulletList],
     content: description,
     editorProps: {
       attributes: {
@@ -31,8 +25,9 @@ const Tiptap = ({
       },
     },
     onUpdate({ editor }) {
-      onChange(editor.getHTML())
-      console.log(editor.getHTML())
+      const dirtyHTML: string = editor.getHTML()
+      const cleanHTML: string = DOMPurify.sanitize(dirtyHTML)
+      onChange(cleanHTML)
     },
   })
 
