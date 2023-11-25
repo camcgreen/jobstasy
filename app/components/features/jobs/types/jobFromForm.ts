@@ -1,9 +1,9 @@
 export interface JobFromForm {
-  deadline: number
+  deadline: string
   title: string
   location: string
   salaryRange: string
   fullTime: boolean
-  level: 'junior' | 'mid' | 'senior'
+  level: string
   md: string
 }

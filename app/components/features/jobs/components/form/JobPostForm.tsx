@@ -1,14 +1,22 @@
 'use client'
 
 import React from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { useForm, Controller, SubmitHandler } from 'react-hook-form'
 import { JobFromForm } from '@/app/components/features/jobs/types/jobFromForm'
 import styles from '@/app/components/features/jobs/components/form/page.module.css'
 import DualThumbSlider from '@/app/components/common/components/dual-thumb-slider/dualThumbSlider'
 
 const JobPostForm: React.FC = () => {
+  const now: string = new Date().toISOString().slice(0, 16)
+  const sixMonthsFromNow: string = new Date(
+    new Date().setMonth(new Date().getMonth() + 6)
+  )
+    .toISOString()
+    .slice(0, 16)
+
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
   } = useForm({
@@ -18,7 +26,8 @@ const JobPostForm: React.FC = () => {
       level: '',
       fullTime: true,
       salaryRange: '',
-      deadline: Date.now(),
+      deadline: '',
+      md: '',
     },
   })
   const onSubmit: SubmitHandler<JobFromForm> = (data) => console.log(data)
@@ -56,7 +65,6 @@ const JobPostForm: React.FC = () => {
           })}
           placeholder='Location'
         />
-
         <select
           {...register('level', {
             required: 'You must include the job seniority level.',
@@ -73,19 +81,42 @@ const JobPostForm: React.FC = () => {
           Full Time:
           <input type='checkbox' {...register('fullTime')} />
         </label>
-        <label htmlFor='salaryMin'>Salary range (low):</label>
-        <DualThumbSlider
-          min={25000}
-          max={100000}
-          onChange={({ min, max }: { min: number; max: number }) => {
-            const formattedMin = min
-            const formattedMax = max
-            const salaryRange = `£${formattedMin}-£${formattedMax}`
-            console.log(salaryRange)
-          }}
+        <label htmlFor='salaryRange'>Salary range:</label>
+        <Controller
+          control={control}
+          name='salaryRange'
+          render={({ field: { onChange } }) => (
+            <DualThumbSlider
+              min={25000}
+              max={100000}
+              onChange={({ min, max }: { min: number; max: number }) => {
+                const formattedMin = min
+                const formattedMax = max
+                const salaryRange = `£${formattedMin}-£${formattedMax}`
+                onChange(salaryRange)
+              }}
+            />
+          )}
         />
+        <Controller
+          control={control}
+          name='deadline'
+          rules={{
+            required:
+              'You must enter a date and time for the application deadline.',
+          }}
+          render={({ field }) => (
+            <input
+              type='datetime-local'
+              min={now}
+              max={sixMonthsFromNow}
+              {...field}
+            />
+          )}
+        />
+        <input type='submit' />
       </form>
-      <p>{errors.title?.message}</p>
+      <p>{errors.deadline?.message}</p>
     </div>
   )
 }
