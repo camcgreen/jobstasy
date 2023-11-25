@@ -1,23 +1,19 @@
 'use client'
-
 import React from 'react'
-import { useForm, Controller, SubmitHandler } from 'react-hook-form'
-import { collection, addDoc } from 'firebase/firestore'
-import { db } from '@/firebase/config'
-import { JobFromForm } from '@/app/components/features/jobs/types/jobFromForm'
-import { Job } from '@/app/components/features/jobs/types/job'
+import { useForm, Controller } from 'react-hook-form'
 import Tiptap from '@/app/components/features/jobs/components/form/tiptap/titap'
 import DualThumbSlider from '@/app/components/common/components/dual-thumb-slider/dualThumbSlider'
+import { useFormSubmit } from '@/app/components/features/jobs/hooks/useFormSubmit'
+import { JobFromForm } from '@/app/components/features/jobs/types/jobFromForm'
+import {
+  getCurrentDateTime,
+  getSixMonthsFromNowDateTime,
+} from '@/app/components/features/jobs/components/form/utils/helpers'
 import styles from '@/app/components/features/jobs/components/form/page.module.css'
 
 const JobPostForm: React.FC = () => {
-  const now: string = new Date().toISOString().slice(0, 16)
-  const sixMonthsFromNow: string = new Date(
-    new Date().setMonth(new Date().getMonth() + 6)
-  )
-    .toISOString()
-    .slice(0, 16)
-
+  const now: string = getCurrentDateTime()
+  const sixMonthsFromNow: string = getSixMonthsFromNowDateTime()
   const {
     register,
     control,
@@ -34,19 +30,9 @@ const JobPostForm: React.FC = () => {
       deadline: '',
     },
   })
-  const onSubmit: SubmitHandler<JobFromForm> = async (data) => {
-    const dataToSubmit: Job = JSON.parse(JSON.stringify(data))
-    dataToSubmit.uid = crypto.randomUUID()
-    dataToSubmit.createdAt = now
-    dataToSubmit.company = 'Apple' // Get this from the user account
-    // dataToSubmit.applicants = Math.floor(Math.random() * 100) // use this only when populating database
-    dataToSubmit.applicants = 0
-    try {
-      const docRef = await addDoc(collection(db, 'jobs'), dataToSubmit)
-      console.log('Document written with ID: ', docRef.id)
-    } catch (e) {
-      console.error('Error adding document: ', e)
-    }
+  const submitForm = useFormSubmit()
+  const onSubmit = async (data: JobFromForm) => {
+    await submitForm(data, now)
   }
   return (
     <div className={styles.container}>
