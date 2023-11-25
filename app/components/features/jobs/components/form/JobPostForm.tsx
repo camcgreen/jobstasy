@@ -3,6 +3,10 @@ import React from 'react'
 import { useForm, Controller } from 'react-hook-form'
 import Tiptap from '@/app/components/features/jobs/components/form/tiptap/titap'
 import DualThumbSlider from '@/app/components/common/components/dual-thumb-slider/dualThumbSlider'
+import InputField from '@/app/components/common/components/input-field/inputField'
+import SelectField from '@/app/components/common/components/select-field/selectField'
+import CheckboxField from '@/app/components/common/components/checkbox-field/checkboxField'
+import DateTimeField from '@/app/components/common/components/datetime-field/dateTimeField'
 import { defaultFormValues } from '@/app/components/features/jobs/components/form/validation/defaultFormValues'
 import { formRules } from '@/app/components/features/jobs/components/form/validation/rules'
 import { useFormSubmit } from '@/app/components/features/jobs/hooks/useFormSubmit'
@@ -32,10 +36,22 @@ const JobPostForm: React.FC = () => {
     <div className={styles.container}>
       <h2>Form</h2>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor='title'>Title</label>
-        <input {...register('title', formRules.title)} />
-        <label htmlFor='location'>Location</label>
-        <input {...register('location', formRules.location)} />
+        <InputField
+          label='title'
+          name='title'
+          type='text'
+          register={register}
+          rules={formRules.title}
+          error={errors.title?.message}
+        />
+        <InputField
+          label='location'
+          name='location'
+          type='text'
+          register={register}
+          rules={formRules.location}
+          error={errors.location?.message}
+        />
         <label htmlFor='description'>Description</label>
         <Controller
           control={control}
@@ -50,19 +66,20 @@ const JobPostForm: React.FC = () => {
             />
           )}
         />
-        <label htmlFor='level'>Seniority Level</label>
-        <select {...register('level', formRules.level)}>
-          <option value='' disabled>
-            {/* Select option... */}
-          </option>
-          <option value='Junior'>Junior</option>
-          <option value='Mid-Level'>Mid-level</option>
-          <option value='Senior'>Senior</option>
-        </select>
-        <label>
-          Full Time:
-          <input type='checkbox' {...register('fullTime')} />
-        </label>
+        <SelectField
+          label='Seniority Level'
+          name='level'
+          register={register}
+          rules={formRules.level}
+          options={['Junior', 'Mid-Level', 'Senior']}
+          error={errors.level?.message}
+        />
+        <CheckboxField
+          label='Full Time'
+          name='fullTime'
+          register={register}
+          error={errors.fullTime?.message}
+        />
         <label htmlFor='salaryRange'>Salary</label>
         <Controller
           control={control}
@@ -88,23 +105,17 @@ const JobPostForm: React.FC = () => {
             />
           )}
         />
-        <label htmlFor='deadline'>Application Deadline</label>
-        <Controller
+        <DateTimeField
           control={control}
           name='deadline'
+          label='Application Deadline'
           rules={formRules.deadline}
-          render={({ field }) => (
-            <input
-              type='datetime-local'
-              min={now}
-              max={sixMonthsFromNow}
-              {...field}
-            />
-          )}
+          min={now}
+          max={sixMonthsFromNow}
+          error={errors.deadline?.message}
         />
         <input type='submit' />
       </form>
-      <p>{errors.deadline?.message}</p>
     </div>
   )
 }
